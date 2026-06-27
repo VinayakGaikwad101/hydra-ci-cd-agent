@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import * as fs from 'fs';
 import * as path from 'path';
+import os from 'os';
 import { execSync } from 'child_process';
 import { GoogleGenAI } from '@google/genai';
 import { runCritic } from '@/lib/agents/critic';
@@ -103,7 +104,9 @@ export async function GET(request: NextRequest) {
         }
 
         // 4. Create Workspace Directory
-        const workspacesRoot = path.join(process.cwd(), 'temp-workspaces');
+        const workspacesRoot = process.env.VERCEL 
+          ? path.join(os.tmpdir(), 'temp-workspaces')
+          : path.join(process.cwd(), 'temp-workspaces');
         if (!fs.existsSync(workspacesRoot)) {
           fs.mkdirSync(workspacesRoot, { recursive: true });
         }
