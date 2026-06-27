@@ -175,3 +175,6 @@ git push -u origin main
 3. Go to **Settings (⚙️)**.
 4. Keep the environment toggled to **Simulation Mode** (this is mandatory on Vercel as serverless Lambdas cannot run a local Docker daemon).
 5. Select **Preset: Calculator Bug** or **Preset: Auth Service Bug** and click **Trigger Webhook & Fix** to test!
+
+
+repo at: https://github.com/VinayakGaikwad101/hydra-ci-cd-agent
