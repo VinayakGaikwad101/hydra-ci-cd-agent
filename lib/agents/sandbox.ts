@@ -115,9 +115,14 @@ ALL TESTS PASSED!
       
       logMessage += `Docker Sandbox: Creating container with mount ${hostBindPath} -> /app...\n`;
       
+      const hasPackageJson = fs.existsSync(path.join(workspacePath, 'package.json'));
+      const containerCmd = hasPackageJson 
+        ? `npm install --no-audit --no-fund && ${testCommand}`
+        : testCommand;
+
       const container = await dockerInstance.createContainer({
         Image: 'node:20-alpine',
-        Cmd: ['sh', '-c', testCommand],
+        Cmd: ['sh', '-c', containerCmd],
         WorkingDir: '/app',
         HostConfig: {
           Binds: [`${hostBindPath}:/app`],
