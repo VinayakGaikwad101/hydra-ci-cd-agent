@@ -50,7 +50,7 @@ export async function runSandbox(
     logMessage += "Running tests in SIMULATION MODE (Serverless Vercel Environment)...\n";
     
     // Simulate container boot
-    logMessage += "Booting sandboxed container node:18-alpine...\n";
+    logMessage += "Booting sandboxed container node:20-alpine...\n";
     await delay(1000);
     logMessage += "Mounting workspace volume at /workspace...\n";
     await delay(800);
@@ -91,11 +91,11 @@ ALL TESTS PASSED!
 
   if (dockerConnected && dockerInstance) {
     try {
-      logMessage += "Docker Sandbox: Pulling/using node:18-alpine image...\n";
+      logMessage += "Docker Sandbox: Pulling/using node:20-alpine image...\n";
       
       // Pull image if not already present
       await new Promise<void>((resolve, reject) => {
-        dockerInstance!.pull('node:18-alpine', {}, (err: any, stream: any) => {
+        dockerInstance!.pull('node:20-alpine', {}, (err: any, stream: any) => {
           if (err) return reject(err);
           dockerInstance!.modem.followProgress(stream, (followErr: any) => {
             if (followErr) return reject(followErr);
@@ -103,7 +103,7 @@ ALL TESTS PASSED!
           });
         });
       });
-      logMessage += "✓ Docker image node:18-alpine is ready.\n";
+      logMessage += "✓ Docker image node:20-alpine is ready.\n";
       
       // Convert host path for docker binds if on Windows (e.g. c:/... -> /c/...)
       let hostBindPath = workspacePath;
@@ -116,7 +116,7 @@ ALL TESTS PASSED!
       logMessage += `Docker Sandbox: Creating container with mount ${hostBindPath} -> /app...\n`;
       
       const container = await dockerInstance.createContainer({
-        Image: 'node:18-alpine',
+        Image: 'node:20-alpine',
         Cmd: ['sh', '-c', testCommand],
         WorkingDir: '/app',
         HostConfig: {
